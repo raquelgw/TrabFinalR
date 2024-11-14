@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <div>
+            <label>Email</label>
+            <input type="email" name="email">
+        </div>
+        <div>
+            <label>Senha</label>
+            <input type="password" name="senha">
+        </div>
+        <div>
+            <button>entrar</button>
+        </div>
+    </form>
+    <a href="cadastro.html">Cadastre-se</a>
+    <script>
+        const frm = document.querySelector("form")
+        frm.addEventListener("submit", async (event) => {
+            event.preventDefault()
+            const conteudo = {  
+                email: frm.email.value, 
+                senha: frm.senha.value
+            }
+            
+            const resp = await fetch("/login", {
+                method:  "POST",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify(conteudo)
+            })
+    
+            if (resp.status == 401)
+                return alert("usuário e senha não conferem")
+
+            if (!resp.ok)
+                return alert("erro inesperado")
+
+            const respData = await resp.json()
+            localStorage.setItem("token", respData.token)
+            location.href = "home.html"
+        })
+    </script>
+</body>
+</html>
