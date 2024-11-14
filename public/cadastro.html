@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='cadastro.css'>
+    <title>Cadastro</title>
 </head>
 <body>
     <form>
@@ -27,11 +28,19 @@
         const frm = document.querySelector("form")
         frm.addEventListener("submit", async (event) => {
             event.preventDefault()
-            const conteudo = { 
-                nome: frm.nome.value, 
-                email: frm.email.value, 
-                senha: frm.senha.value,
-            }
+            const nome = frm.nome.value
+            const email = frm.email.value
+            const senha = frm.senha.value
+            const conteudo = { nome, email, senha }
+            
+            if(nome.trim() == "")
+                return alert("Campo vazio")
+            
+            if(email.trim() == "")
+                return alert("Campo vazio")
+            
+            if(senha == "")
+                return alert("Campo vazio")
             
             await fetch("/usuario", {
                 method:  "POST",
@@ -39,6 +48,8 @@
                 body: JSON.stringify(conteudo)
             })
         })
+        
+        
     </script>
 </body>
 </html>
