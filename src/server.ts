@@ -24,6 +24,13 @@ app.post("/login", async (req, res) => {
     res.json({token:"deu tudo certo "}) 
 })
 
+// app.post("/home", async (req, res) => {
+//     const db = await connect()
+//     const { nomes, gen, qtd, lan } = req.body
+//     const serie = await db.get("SELECT id, nomes, gen, qtd, lan FROM serie)
+// })
+
+
 // app.get("/", (req, res) => {
 //     res.sendFile(__dirname + "/public/login.html")
 // })

@@ -18,10 +18,10 @@
         </div>
         <div>
             <label>Senha</label>
-            <input name="senha">
+            <input type = "password" name="senha">
         </div>
         <div>
-            <button>cadastrar</button>
+            <button>Cadastrar</button>
         </div>
     </form>
     <script>
@@ -47,6 +47,11 @@
                 headers: { 'Content-Type': "application/json" },
                 body: JSON.stringify(conteudo)
             })
+            if (!resp.ok)
+                return alert("Erro inesperado")
+
+            if (resp.ok)
+                return alert("Cadastro realizado")
         })
         
         

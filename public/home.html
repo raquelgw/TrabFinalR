@@ -25,45 +25,28 @@
             <input name="lan">
         </div>
         <div>
-            <button>cadastrar:</button>
-        </div>
-    </form>
-    <H2>Diretor:</H2>
-    <form>
-        <div>
-            <label>Nome do diretor:</label>
-            <input name="dir">
-        </div>
-        <div>
-            <label>Data de nascimento:</label>
-            <input type="date" name="nasc">
-        </div>
-        <div>
-            <label>Nacionalidade:</label>
-            <input name="naci">
-        </div>
-        <div>
             <button>cadastrar</button>
         </div>
-    </form>
-    <H2>Personagem:</H2>
-    <form>
-        <div>
-            <label>Nome do personagem:</label>
-            <input name="pers">
-        </div>
-        <div>
-            <label>Nome do ator:</label>
-            <input name="ator">
-        </div>
-        <div>
-            <label>Descrição:</label>
-            <input name="desc">
-        </div>
-        <div>
-            <button>cadastrar</button>
-        </div>
-    </form>
+    
+    <script>
+        const frm = document.querySelector("form")
+        frm.addEventListener("submit", async (event) => {
+            event.preventDefault()
+            const nomes = frm.nomes.value
+            const genero = frm.gen.value
+            const quantidadeep = frm.qtd.value
+            const ano = frm.lan.value
+            const conteudo = { nome, gen, qtd, lan }
+            
+            await fetch("/fomr", {
+                method:  "POST",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify(conteudo)
+            })
+            const respData = await resp.json()
+            location.href = "diretor.html"
+        })
+    </script>
 
 </body>
 </html>

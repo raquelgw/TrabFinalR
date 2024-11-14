@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H2>Diretor:</H2>
+    <form>
+        <div>
+            <label>Nome do diretor:</label>
+            <input name="dir">
+        </div>
+        <div>
+            <label>Data de nascimento:</label>
+            <input type="date" name="nasc">
+        </div>
+        <div>
+            <label>Nacionalidade:</label>
+            <input name="naci">
+        </div>
+        <div>
+            <button>cadastrar</button>
+        </div>
+    </form>
+    const frm = document.querySelector("form")
+        frm.addEventListener("submit", async (event) => {
+            event.preventDefault()
+            const diretor = frm.dir.value
+            const nasc = frm.nasc.value
+            const naci = frm.naci.value
+            const conteudo = { dir, nasc, naci }
+            
+            await fetch("/fomr", {
+                method:  "POST",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify(conteudo)
+            })
+            location.href = "personagem.html"
+        })
+</body>
+</html>

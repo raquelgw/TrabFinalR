@@ -20,6 +20,15 @@ export async function connect(){
             senha TEXT
         )    
     `)
+    await db.exec(`
+        CREATE TABLE IF NOT EXISTS serie (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nomes TEXT,
+            gen TEXT, 
+            qtd TEXT,
+            lan TEXT
+        )    
+    `)
     
     instance = db
     return db
