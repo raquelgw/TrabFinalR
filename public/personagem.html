@@ -6,6 +6,12 @@
     <title>Document</title>
 </head>
 <body>
+    <nav>
+        <a href="diretor.html">diretor</a>
+        <a href="personagem.html">personagem</a>
+        <a href="serie.html">serie</a>
+    </nav>
+    
     <H2>Personagem:</H2>
     <form>
         <div>
@@ -24,5 +30,23 @@
             <button>cadastrar</button>
         </div>
     </form>
+    <script> 
+        const frm = document.querySelector("form")
+        frm.addEventListener("submit", async (event) => {
+            event.preventDefault()
+            const pers = frm.pers.value
+            const ator = frm.ator.value
+            const desc = frm.desc.value
+            const conteudo = { pers, ator, desc }
+            
+            await fetch("/personagem", {
+                method:  "POST",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify(conteudo)
+            })
+            const respData = await resp.json()
+            location.href = "diretor.html"
+        })
+    </script>
 </body>
 </html>

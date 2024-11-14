@@ -18,16 +18,29 @@ export async function connect(){
             nome TEXT,
             email TEXT, 
             senha TEXT
-        )    
-    `)
-    await db.exec(`
+        );
+
         CREATE TABLE IF NOT EXISTS serie (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nomes TEXT,
-            gen TEXT, 
-            qtd TEXT,
-            lan TEXT
-        )    
+            genero TEXT, 
+            quantidade_ep TEXT,
+            lancamento TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS diretor (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            diretor TEXT,
+            nascimento TEXT, 
+            nacionalidade TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS personagem (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            personagem TEXT,
+            ator TEXT, 
+            descricao TEXT
+        );
     `)
     
     instance = db

@@ -42,6 +42,7 @@
                 return alert("Erro inesperado")
 
             const respData = await resp.json()
+            console.log(respData)
             localStorage.setItem("token", respData.token)
             location.href = "home.html"
         })

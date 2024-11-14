@@ -1,5 +1,6 @@
 import express from "express"
 import { connect } from "./database"
+import { sign } from "./util/jwt"
 
 const app = express()
 
@@ -16,19 +17,43 @@ app.post("/usuario", async (req, res) => {
 app.post("/login", async (req, res) => {
     const db = await connect()
     const { email, senha } = req.body
-    const usuarios = await db.get("SELECT id, email FROM usuarios WHERE email = ? and senha = ?", [email, senha])
-    if (!usuarios){
+    const usuario = await db.get("SELECT id FROM usuarios WHERE email = ? and senha = ? LIMIT 1", [email, senha])
+    if (!usuario){
         res.status(401).json({mensagem:"Acesso negado"})
         return
     } 
-    res.json({token:"deu tudo certo "}) 
+    const { id } = usuario
+    const token = await sign({ id, email })
+    res.json({ token }) 
 })
 
-// app.post("/home", async (req, res) => {
-//     const db = await connect()
-//     const { nomes, gen, qtd, lan } = req.body
-//     const serie = await db.get("SELECT id, nomes, gen, qtd, lan FROM serie)
-// })
+app.post("/serie", async (req, res) => {
+    const db = await connect()
+    const { nomes, genero, quantidade_ep, lancamento } = req.body
+
+    if (nomes.trim() == "") {
+        res.status(400).json({ message: "nome da serie não pode ser vazio" });
+        return
+    }
+
+    if (genero.trim() == "") {
+        res.status(400).json({ message: "genero não pode ser vazio" });
+        return
+    }
+
+    if (quantidade_ep.trim() == "") {
+        res.status(400).json({ message: "quantidade de episodios não pode ser vazio" });
+        return
+    }
+
+    if (lancamento.trim() == "") {
+        res.status(400).json({ message: "ano de lançamento não pode ser vazio" });
+        return
+    }
+
+    const serie = await db.run("INSERT INTO serie (nomes, genero, quantidade_ep, lancamento) VALUES (?, ?, ?, ?)",  [nomes, genero, quantidade_ep, lancamento])
+    res.json("deu certo")
+})
 
 
 // app.get("/", (req, res) => {

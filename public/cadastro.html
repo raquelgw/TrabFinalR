@@ -42,18 +42,14 @@
             if(senha == "")
                 return alert("Campo vazio")
             
-            await fetch("/usuario", {
+            const resp = await fetch("/usuario", {
                 method:  "POST",
                 headers: { 'Content-Type': "application/json" },
                 body: JSON.stringify(conteudo)
             })
-            if (!resp.ok)
-                return alert("Erro inesperado")
 
-            if (resp.ok)
-                return alert("Cadastro realizado")
+            alert(resp.ok ? "Cadastro realizado" : "Erro inesperado")
         })
-        
         
     </script>
 </body>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séries</title>
+</head>
+<body>
+    <nav>
+        <a href="diretor.html">diretor</a>
+        <a href="personagem.html">personagem</a>
+        <a href="serie.html">serie</a>
+    </nav>
+
+    <H2>Série:</H2>
+    <form>
+        <div>
+            <label>Nome da série:</label>
+            <input name="nomes">
+        </div>
+        <div>
+            <label>Gênero:</label>
+            <input name="gen">
+        </div>
+        <div>
+            <label>Quantidade de episódios:</label>
+            <input name="qtd">
+        </div>
+        <div>
+            <label>Ano de Lançamento:</label>
+            <input name="lan">
+        </div>
+        <div>
+            <button>cadastrar</button>
+        </div>
+    
+    <script>
+        const frm = document.querySelector("form")
+        frm.addEventListener("submit", async (event) => {
+            event.preventDefault()
+            const nomes = frm.nomes.value
+            const genero = frm.gen.value
+            const quantidade_ep = frm.qtd.value
+            const lancamento = frm.lan.value
+            const conteudo = { nomes, genero, quantidade_ep, lancamento }
+        
+            if (nomes.trim() == "") {
+                alert("nome da serie não pode ser vazio");
+                return
+            }
+        
+            if (genero.trim() == "") {
+                alert("genero não pode ser vazio");
+                return
+            }
+
+            if (quantidade_ep.trim() == "") {
+                alert("quantidade de episódios não pode ser vazio");
+                return
+            }
+
+            if (lancamento.trim() == "" || lancamento >= new Date().getFullYear() || lancamento <= 1900) {
+                alert("ano de lançamento esta incorreto");
+                return
+            }
+
+            const resp = await fetch("/serie", {
+                method:  "POST",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify(conteudo)
+            })
+
+            if (resp.ok) {
+                alert("serie cadastrada com sucesso")
+                frm.reset()
+                return
+            }
+
+            const dataResp = await resp.json()
+
+            alert("Erro servidor: " + dataResp.message) 
+        })
+    </script>
+
+</body>
+</html>
